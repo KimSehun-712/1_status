@@ -1,0 +1,171 @@
+#include <iostream>
+using namespace std;
+
+
+//포션 세팅 함수
+void setPotion(int count, int* p_HPPotion, int* p_MPPotion)
+{
+    *p_HPPotion = count;
+    *p_MPPotion = count;
+}
+
+
+int main()
+{
+    int status[4] = { 0,0,0,0 };
+    // status[0] = HP, status[1] = MP, status[2] = 공격력, status[3] = 방어력
+
+
+    //HP, MP 입력 (조건 : 둘 다 50 초과)
+    while (status[0] <= 50 || status[1] <= 50) 
+    {
+        cout << "HP와 MP를 입력해주세요: ";
+        cin >> status[0] >> status[1];
+    }
+   
+    //공격력, 방어력 입력 (조건 : 둘 다 0 초과)
+    while (status[2] <= 0 || status[3] <= 0)
+    {
+        cout << "공격력과 방어력을 입력해주세요: ";
+        cin >> status[2] >> status[3];
+    }
+
+    //포션 세팅
+    int HPPotion, MPPotion;
+    setPotion(5, &HPPotion, &MPPotion);
+
+
+    //스탯 관리 시스템
+    int choice; // 사용자의 선택 번호
+
+    cout << "<스탯 관리 시스템>" << endl
+        << "1. HP 회복" << endl
+        << "2. MP 회복" << endl
+        << "3. HP 강화" << endl
+        << "4. MP 강화" << endl
+        << "5. 공격 스킬 사용" << endl
+        << "6. 필살기 사용" << endl
+        << "7. 나가기" << endl
+        << "번호를 선택해주세요 :";
+    cin >> choice;
+
+    for (;;)
+    {
+        if (choice == 1) // 1. HP 회복
+        {
+            if (HPPotion > 0)
+            {
+                status[0] += 20;
+                HPPotion--;
+                cout << "HP가 20 회복되었습니다. 포션이 1개 차감됩니다" << endl
+                    << "현재 HP : " << status[0] << endl
+                    << "남은 포션 수 : " << HPPotion << endl
+                    << " 번호를 선택해주세요 : ";
+                cin >> choice;
+            }
+            else
+            {
+                cout << "포션이 부족합니다"<<endl
+                    << "남은 포션 수 : " << HPPotion << endl
+                    << " 번호를 선택해주세요 : ";
+                cin >> choice;
+            }
+        }
+
+        else if (choice == 2) // 2. MP 회복
+        {
+            if (MPPotion > 0)
+            {
+                status[1] += 20;
+                MPPotion--;
+                cout << "MP가 20 회복되었습니다. 포션이 1개 차감됩니다" << endl
+                    << "현재 MP : " << status[1] << endl
+                    << "남은 포션 수 : " << MPPotion << endl
+                    << " 번호를 선택해주세요 : ";
+                cin >> choice;
+            }
+            else
+            {
+                cout << "포션이 부족합니다" << endl
+                    << "남은 포션 수 : " << MPPotion << endl
+                    << " 번호를 선택해주세요 : ";
+                cin >> choice;
+            }
+        }
+
+        else if (choice == 3) // 3. HP 강화
+        {
+            status[0] *= 2;
+            cout << "HP가 2배로 증가되었습니다" << endl
+                << "현재 HP : " << status[0] << endl
+                << "번호를 선택해주세요 : ";
+            cin >> choice;
+        }
+
+        else if (choice == 4) // 4. MP 강화
+        {
+            status[1] *= 2;
+            cout << "MP가 2배로 증가되었습니다" << endl
+                << "현재 MP : " << status[1] << endl
+                << "번호를 선택해주세요 : ";
+            cin >> choice;
+        }
+
+        else if (choice == 5) // 5. 공격 스킬 사용
+        {
+            if (status[1] >= 50)
+            {
+                status[1] -= 50;
+                cout << "스킬을 사용하여 MP가 50 소모되었습니다" << endl
+                    << "현재 MP : " << status[1] << endl
+                    << "번호를 선택해주세요 : ";
+                cin >> choice;
+            }
+            else
+            {
+                cout << "MP가 부족합니다" << endl
+                    << "현재 MP : " << status[1] << endl
+                    << "번호를 선택해주세요 : ";
+                cin >> choice;
+            }
+            
+        }
+
+        else if (choice == 6) // 6. 필살기 사용
+        {
+            if (status[1] > 0)
+            {
+                status[1] /= 2;
+                cout << "스킬을 사용하여 MP가 50% 소모되었습니다" << endl
+                    << "현재 MP : " << status[1] << endl
+                    << "번호를 선택해주세요 : ";
+                cin >> choice;
+            }
+            else
+            {
+                cout << "MP가 부족합니다" << endl
+                    << "현재 MP : " << status[1] << endl
+                    << "번호를 선택해주세요 : ";
+                cin >> choice;
+            }
+
+        }
+
+        else if (choice == 7) // 7. 나가기
+        {
+            cout << "프로그램을 종료합니다";
+            
+            break;
+        }
+
+        else // 오입력시
+        {
+            cout << "다시 입력해주세요" << endl
+                << "번호를 선택해주세요 : ";
+            cin >> choice;
+        }
+
+    }
+
+    return 0;
+}
